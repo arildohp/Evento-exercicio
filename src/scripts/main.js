@@ -9,7 +9,19 @@ const contaAsHoras = setInterval(function() {
 
     const distanciaAteOEvento = timeStampDoEvento - timeStampAtual;
 
-    const diasAteOEvento = match.floor(distanciaAteOEvento / (1000 * 60 * 60 * 24));
-   
-    console.log(diasAteOEvento);
+    const diaEmMS = 100 * 60 * 60 * 24;
+    const horaEmMS = 100 * 60 * 60;
+    const minutoEmMs = 100 * 60;
+    
+    const diasAteOEvento = math.floor(distanciaAteOEvento / diaEmMS);
+    const horasAteOEvento = math.floor((distanciaAteOEvento % diaEmMS) / horaEmMS);
+    const minutosAteOEvento = math.floor((distanciaAteOEvento % horaEmMS) / minutoEmMs);
+    const segundosAteOEvento = math.floor((distanciaAteOEvento % minutoEmMs) / 1000);
+
+    document.getElementById('contador').innerHTML = `${diasAteOEvento}d ${horasAteOEvento}h ${minutosAteOEvento}m ${segundosAteOEvento}s`;
+
+    if (distanciaAteOEvento < 0) {
+        clearInterval(contaAsHoras);
+        document.getElementById('contador').innerHTML = 'Evento expirado';
+    }
 }, 1000);
